@@ -22,3 +22,15 @@ after_success:
   - docker push zavanton/spider-nginx
 
 
+deploy:
+  provider: elasticbeanstalk
+  region: 'us-east-2'
+  app: 'spider'
+  env: 'Spider-env'
+  bucket_name: 'elasticbeanstalk-us-east-2-565447122202'
+  bucket_path: 'docker-spider'
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
+
