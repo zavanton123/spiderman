@@ -5,8 +5,20 @@ services:
   - docker
 
 before_install:
-  - docker build -t zavanton/spider-test -f ./client/Dockerfile ./client
+  - docker build -t zavanton/spider-test -f ./client/Dockerfile.dev ./client
 
 script:
   - docker run -e CI=true zavanton/spider-test npm run test
+
+after_success:
+  - docker build -t zavanton/spider-client ./client
+  - docker build -t zavanton/spider-server ./server
+  - docker build -t zavanton/spider-worker ./worker
+  - docker build -t zavanton/spider-nginx ./nginx
+  - echo $HUB_PASS | docker login -u $HUB_ID --password-stdin
+  - docker push zavanton/spider-client
+  - docker push zavanton/spider-server
+  - docker push zavanton/spider-worker
+  - docker push zavanton/spider-nginx
+
 
