@@ -25,10 +25,10 @@ after_success:
 deploy:
   provider: elasticbeanstalk
   region: 'us-east-2'
-  app: 'tyson'
-  env: 'Tyson-env'
+  app: 'tyson-multi'
+  env: 'Tysonmulti-env'
   bucket_name: 'elasticbeanstalk-us-east-2-565447122202'
-  bucket_path: 'docker-tyson'
+  bucket_path: 'docker-tysonmulti'
   on:
     branch: master
   access_key_id: $AWS_ACCESS_KEY
