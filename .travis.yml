@@ -5,30 +5,30 @@ services:
   - docker
 
 before_install:
-  - docker build -t zavanton/superman-test -f ./client/Dockerfile.dev ./client
+  - docker build -t zavanton/tyson-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run -e CI=true zavanton/superman-test npm run test
+  - docker run -e CI=true zavanton/tyson-test npm run test
 
 after_success:
-  - docker build -t zavanton/superman-client ./client
-  - docker build -t zavanton/superman-server ./server
-  - docker build -t zavanton/superman-worker ./worker
-  - docker build -t zavanton/superman-nginx ./nginx
+  - docker build -t zavanton/tyson-client ./client
+  - docker build -t zavanton/tyson-server ./server
+  - docker build -t zavanton/tyson-worker ./worker
+  - docker build -t zavanton/tyson-nginx ./nginx
   - echo $HUB_PASS | docker login -u $HUB_ID --password-stdin
-  - docker push zavanton/superman-client
-  - docker push zavanton/superman-server
-  - docker push zavanton/superman-worker
-  - docker push zavanton/superman-nginx
+  - docker push zavanton/tyson-client
+  - docker push zavanton/tyson-server
+  - docker push zavanton/tyson-worker
+  - docker push zavanton/tyson-nginx
 
 
 deploy:
   provider: elasticbeanstalk
   region: 'us-east-2'
-  app: 'superman'
-  env: 'Superman-env'
+  app: 'tyson'
+  env: 'Tyson-env'
   bucket_name: 'elasticbeanstalk-us-east-2-565447122202'
-  bucket_path: 'docker-superman'
+  bucket_path: 'docker-tyson'
   on:
     branch: master
   access_key_id: $AWS_ACCESS_KEY
