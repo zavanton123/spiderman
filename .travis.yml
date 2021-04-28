@@ -5,30 +5,30 @@ services:
   - docker
 
 before_install:
-  - docker build -t zavanton/spider-test -f ./client/Dockerfile.dev ./client
+  - docker build -t zavanton/superman-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run -e CI=true zavanton/spider-test npm run test
+  - docker run -e CI=true zavanton/superman-test npm run test
 
 after_success:
-  - docker build -t zavanton/spider-client ./client
-  - docker build -t zavanton/spider-server ./server
-  - docker build -t zavanton/spider-worker ./worker
-  - docker build -t zavanton/spider-nginx ./nginx
+  - docker build -t zavanton/superman-client ./client
+  - docker build -t zavanton/superman-server ./server
+  - docker build -t zavanton/superman-worker ./worker
+  - docker build -t zavanton/superman-nginx ./nginx
   - echo $HUB_PASS | docker login -u $HUB_ID --password-stdin
-  - docker push zavanton/spider-client
-  - docker push zavanton/spider-server
-  - docker push zavanton/spider-worker
-  - docker push zavanton/spider-nginx
+  - docker push zavanton/superman-client
+  - docker push zavanton/superman-server
+  - docker push zavanton/superman-worker
+  - docker push zavanton/superman-nginx
 
 
 deploy:
   provider: elasticbeanstalk
   region: 'us-east-2'
-  app: 'batman'
-  env: 'Batman-env'
+  app: 'superman'
+  env: 'Superman-env'
   bucket_name: 'elasticbeanstalk-us-east-2-565447122202'
-  bucket_path: 'docker-batman'
+  bucket_path: 'docker-superman'
   on:
     branch: master
   access_key_id: $AWS_ACCESS_KEY
